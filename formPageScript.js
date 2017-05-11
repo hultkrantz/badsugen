@@ -119,11 +119,7 @@ class FormComponent extends React.Component {
  }
  handleSubmit(){
    let fb = firebase.database();
-   // firebase.database().ref('comment').push({rating: this.state.rating, comment: this.state.comment});
-   // var self = this;
-   //console.log(this.state.rating)
-	 console.log('submit körs');
-
+ 
    let dataId = this.state.currentObjId;
    
    let time = new Date().toLocaleString();
@@ -144,7 +140,6 @@ class FormComponent extends React.Component {
 	
 	
 	showCommentsAndRating(){
-		console.log('showcomments kör');
 		let list = [];
 		this.setState({
 			commentList: list
@@ -153,7 +148,6 @@ class FormComponent extends React.Component {
 		fb.ref(`omdömen/${this.state.currentObjId}/rateComment/`).on('value', snap => {
 			let data = snap.val();
 			for (let obj in data){
-				console.log(data[obj]);
 				let object = {
 					comment: data[obj].comment,
 					rating: data[obj].rating,
@@ -173,10 +167,10 @@ class FormComponent extends React.Component {
 		});
 	}
 	updateCurrentObj(objId){
-		console.log('updatecurrentObj');
+
 		let userName = localStorage.getItem('currentUserName');
 		let userURL = localStorage.getItem('currentUserURL');
-		//console.log(userName, userURL);
+
 		this.setState({
 			currentObjId: objId,
 			userName: userName,
@@ -190,27 +184,25 @@ class FormComponent extends React.Component {
 
 		
 
-		//console.log(ev.target.parentElement);
-
+		
 		let commentId = ev.target.parentElement.id;
-		//console.log(commentId);
+		
 		this.setState({
 			clickedID: commentId
 		});
-		//console.log(this.state.clickedID);
+		
 		
 		this.showCommentsAndRating();
 	}
 
 
 	handleEdit(){
-		//console.log('click');
-		//console.log(this.state.clickedID);
+
 		let fb = firebase.database();
 		let obj;
 		fb.ref(`omdömen/${this.state.currentObjId}/rateComment/${this.state.clickedID}`).on('value', snap => {
 			let data = snap.val();
-			//console.log(data);
+	
 			obj = {
 					comment: this.state.comment,
 					rating: data.rating,
@@ -239,8 +231,6 @@ class FormComponent extends React.Component {
 	
 	sortChange(ev){
 
-		console.log(this.state.currentObjId);
-		console.log(ev.target.value);
 	let fb = firebase.database();	fb.ref(`omdömen/${this.state.currentObjId}/rateComment/`).orderByChild(ev.target.value).once('value', snap => {
 			let sorted = [];
 		snap.forEach(o =>{
@@ -253,13 +243,7 @@ class FormComponent extends React.Component {
 		});
 	}
 
-	/*<li>
-         <i id="changeComment" class="fa fa-pencil-square-o fa-5" aria-hidden="true"></i><img src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-1/p160x160/13256253_10154096534105792_6902039832411105859_n.jpg?oh=cb5c804b5fc34ca34451d80448526c05&oe=59B8A842" alt="profilbild" id="">
-        <p id="NameComment">Martin Larsson <span id="posted">Postat 2017-05-11 10:57:05</span></p>
-        <p class="writtenComment">"Så himla bra badplats! Så himla bra badplats! Så himla bra badplats!"</p>
-        <p id="rating">Betyg: 5</p>
-       
-    </li>*/
+
 
  render() {
    currentObj2 = this.updateCurrentObj;
@@ -272,7 +256,7 @@ class FormComponent extends React.Component {
 			 <p className="rating">Betyg: {el.rating}</p>
 			  </li>
 	 });
-	 //console.log(this.state.clickedID);
+	
 	 if (this.state.clickedID === null) {
 		 return (
      <div>
@@ -319,9 +303,3 @@ class FormComponent extends React.Component {
  }
 }
 
-/*ReactDOM.render(
-	<div>
-	 <Weather />
-		<FormComponent />
-	</div>, document.getElementById('badplatsPage')
-);*/

@@ -27,7 +27,7 @@ function initMap() {
 	// Try HTML5 geolocation.
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function (position) {
-			//console.log('start', user);
+			
 			user = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
@@ -45,7 +45,7 @@ function initMap() {
 			var service = new google.maps.places.PlacesService(map);
 			service.nearbySearch(request, callback);
 			service.nearbySearch(request2, callback);
-			//console.log('post', user);
+	
 			userMarker = new google.maps.Marker({
 				position: user,
 				map: map
@@ -63,25 +63,12 @@ function initMap() {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
 	}
-
-	
-
-	//console.log(user);
-
-
-	//console.log(request);
 	logoutButton.addEventListener('click', function(){
 		logoutButton.style.display='none';
 		logoutFuntion()
 		window.location.reload()
 	})
-
-
 }
-
-
-
-
 var distanceArray = [];
 
 
@@ -94,11 +81,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 function callback(results, status) {
 	if (status == google.maps.places.PlacesServiceStatus.OK) {
-		//console.log(results);
 		for (var i = 0; i < results.length; i++) {
 			let lat = results[i].geometry.location.lat();
 			let lng = results[i].geometry.location.lng();
-			//console.log(lng);
 			let id = results[i].id;
 			let bName = results[i].name;
 			let startDestination = user;
@@ -115,10 +100,7 @@ function callback(results, status) {
 				if (status !== 'OK') {
 					console.log(status);
 				} else {
-					
-					//console.log(response.destinationAddresses[0]);
-					//console.log(bName);
-					//console.log(response.rows[0].elements[0].distance.value);
+
 					let obj = {
 						name: bName,
 						adress: response.destinationAddresses[0],
@@ -127,35 +109,20 @@ function callback(results, status) {
 						lat: lat,
 						lng: lng
 					}
-					//distanceArray.push(obj);
-					//console.log('obj', obj);
-					//console.log(distanceArray);
+
 					listBaths(obj);
 
-					// React: setState componentDidMount
-					//console.log('length:', distanceArray.length);
 				}
 			})
 			var place = results[i];
 			createMarker(results[i]);
 		}
-		//console.log(distanceArray);
-
-
 
 	}
-	/*	console.log('distancearray', typeof(distanceArray), distanceArray, distanceArray['0'], distanceArray.length);
-		console.log( JSON.stringify(distanceArray) );
-		for(let x in distanceArray) {
-			console.log('x:', x);
-		}
-		for (let i = 0; i<distanceArray.length; i++){
-				console.log('körs');
-			}*/
+
 }
 
 function createMarker(place) {
-	//console.log(place);
 	var placeLoc = place.geometry.location;
 	var marker = new google.maps.Marker({
 		map: map,
@@ -164,7 +131,6 @@ function createMarker(place) {
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
-		//console.log(place);
 		let obj = {
 			id: place.id,
 			name: place.name
@@ -189,9 +155,9 @@ function listBaths(obj) {
 }
 
 function listNearestBaths(list) {
-	//console.log('list',list);
+
 	table.style.display = 'block';
-	//console.log('list',list);
+
 	let sortedList = list.sort(function (a, b) {
 		return a.distance - b.distance;
 	});
@@ -204,7 +170,7 @@ function listNearestBaths(list) {
         		<th>Avstånd</th>`;
 	row.innerHTML = html;
 	tBody.appendChild(row);
-	//console.log(sortedList);
+
 	for (i = 0; i < sortedList.length; i++) {
 		if (i >= 5) {
 			break;
@@ -244,7 +210,6 @@ function deleteSwe(string) {
 let logoutFuntion = function () {
 	firebase.auth().signOut().then(function (result) {
 		localStorage.removeItem("currentUserName")
-		console.log("You are no more my friend");
 	}).catch(function (error) {
 		// Utloggning misslyckades
 		console.log("Det gick inte som vi ville" + error);
