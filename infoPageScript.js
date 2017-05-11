@@ -212,7 +212,7 @@ render() {
         currentObj = this.updateCurrentObj;
  
         return <div id="badplatsInfo">
-                 <a href="https://ullegulle9.github.io/Badsugen/badsugengmaptest.html" className="arrowLink"><i className="fa fa-angle-double-left  fa-3x" aria-hidden="true"></i></a><br />
+                 <a href="https://hultkrantz.github.io/badsugen/index.html" className="arrowLink"><i className="fa fa-angle-double-left  fa-3x" aria-hidden="true"></i></a><br />
                 <h2>{this.state.name}</h2> 
                 <p> {this.state.adress}.<br></br>
                     {this.state.distance} km från din position</p>
