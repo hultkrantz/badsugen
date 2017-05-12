@@ -65,12 +65,11 @@ render() {
 	
 	//check if user is authenticated
 	
-	if( firebase.auth().currentUser) {
+	console.log(firebase.auth().currentUser)
+	if(firebase.auth().currentUser){
 		loginComp =<p id="nameHolder"></p>;
 		this.updateDisplay();
 		initMap();
-
-		
 	} else{
         // User not signed in.
         console.log("Ej inloggad")
